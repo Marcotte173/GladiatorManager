@@ -10,6 +10,7 @@ namespace Gladiator_Manager
             g.Name = "Marcotte";
             Console.WriteLine($"{g.Name} \nHead - {g.Head.HP} hp\nBody - {g.Torso.HP} hp");
             Console.ReadLine();
+            HeadArmor ha = new HeadArmor();
         }
     }
 }

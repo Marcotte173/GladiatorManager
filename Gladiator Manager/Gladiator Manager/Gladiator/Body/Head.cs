@@ -5,7 +5,8 @@ using System.Text;
 public class Head:Body
 {
     int eyes;
-    bool teeth;    
+    bool teeth;
+    HeadArmor armor;
 
     public Head()
     : base()
@@ -13,7 +14,9 @@ public class Head:Body
         eyes = 2;
         teeth = true;
         hp = maxHp = 5;
+        armor = new HeadArmor(0, 0);
     }
+    public HeadArmor Armor { get { return armor; } set { armor = value; } }
     public int Eyes { get { return eyes; } set { eyes = value; } }
     public bool Teeth { get { return teeth; } set { teeth = value; } }
 }

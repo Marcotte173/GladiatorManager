@@ -6,8 +6,4 @@
     <RootNamespace>Gladiator_Manager</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Equipment\Weapon\" />
-  </ItemGroup>
-
 </Project>

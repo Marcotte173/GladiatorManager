@@ -20,3 +20,14 @@ C:\Gladiator\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiat
 C:\Gladiator\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.AssemblyInfo.cs
 C:\Gladiator\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.dll
 C:\Gladiator\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.pdb
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.exe
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.deps.json
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.runtimeconfig.json
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.runtimeconfig.dev.json
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.dll
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\bin\Debug\netcoreapp3.0\Gladiator Manager.pdb
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.csprojAssemblyReference.cache
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.AssemblyInfoInputs.cache
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.AssemblyInfo.cs
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.dll
+C:\GlaidatorManager\Gladiator Manager\Gladiator Manager\obj\Debug\netcoreapp3.0\Gladiator Manager.pdb

@@ -20,10 +20,15 @@ public class Hand : Body
         if (attacker.Offence + Return.RandomInt(0, 3) > defender.Defence + Return.RandomInt(0, 3))
         {
             Body body = Combat.Target(defender, 9);
-            Combat.Damage(body, attacker.Strength/2);
+            int Damage = (attacker.Strength / 2);
+            body.TakeDamage(Damage);
             Console.WriteLine($"{attacker.Name} punches {defender.Name} in the {body} for {attacker.Strength / 2}");
         }
-        else Console.WriteLine($"{attacker.Name}'s blow is turned aside by {defender.Name}");
+        else Console.WriteLine($"{attacker.Name}punches but {defender.Name} blocks!");
+    }
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
     }
     public Weapon Weapon { get { return weapon; } set { weapon = value; } }
     public HandArmor Armor { get { return armor; } set { armor = value; } }

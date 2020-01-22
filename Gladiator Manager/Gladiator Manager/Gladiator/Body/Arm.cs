@@ -5,13 +5,27 @@ using System.Text;
 public class Arm:Body
 {
     bool bladeArm;
+    protected Hand hand;
+
     ArmArmor armor;
     public Arm()
     : base()
     {
         hp = maxHp = 5;
         armor = new ArmArmor(0, 0);
+        hand = new Hand(false);
     }
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+    }
+    public override void CheckStatus()
+    {
+        base.CheckStatus();
+        if (destroyed) hand.HP = 0;
+        hand.CheckStatus();
+    }
+    public Hand Hand { get { return hand; } set { hand = value; } }
     public ArmArmor Armor { get { return armor; } set { armor = value; } }
     public bool BladeArm { get { return bladeArm; } set { bladeArm = value; } }
 }

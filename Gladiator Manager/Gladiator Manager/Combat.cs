@@ -13,14 +13,14 @@ public class Combat
 
     private static void Attack(Gladiator g, Gladiator p)
     {
-        if (g.LeftHand.Destroyed == false && g.RightHand.Destroyed == false)
+        if (g.Torso.LeftArm.Hand.Destroyed == false && g.Torso.RightArm.Hand.Destroyed == false)
         {
-            if (g.RightHanded) WeaponCheck(g.RightHand, g, p);
-            else WeaponCheck(g.LeftHand, g, p);
+            if (g.RightHanded) WeaponCheck(g.Torso.RightArm.Hand, g, p);
+            else WeaponCheck(g.Torso.LeftArm.Hand, g, p);
         }        
-        else if (g.LeftHand.Destroyed  && g.RightHand.Destroyed == false) WeaponCheck(g.RightHand, g, p);
-        else if (g.LeftHand.Destroyed == false && g.RightHand.Destroyed) WeaponCheck(g.LeftHand, g, p);
-        else if (g.LeftHand.Destroyed && g.RightHand.Destroyed) Console.WriteLine(g.Name + " cannot attack without arms. He waits for death");
+        else if (g.Torso.LeftArm.Hand.Destroyed  && g.Torso.RightArm.Hand.Destroyed == false) WeaponCheck(g.Torso.RightArm.Hand, g, p);
+        else if (g.Torso.LeftArm.Hand.Destroyed == false && g.Torso.RightArm.Hand.Destroyed) WeaponCheck(g.Torso.LeftArm.Hand, g, p);
+        else if (g.Torso.LeftArm.Hand.Destroyed && g.Torso.RightArm.Hand.Destroyed) Console.WriteLine(g.Name + " cannot attack without arms. He waits for death");
     }
 
     private static void WeaponCheck(Hand hand, Gladiator g, Gladiator p)
@@ -29,22 +29,16 @@ public class Combat
         else hand.Attack(g, p);
     }
 
-    internal static void Damage(Body g, int damage)
-    {
-        g.HP -= damage;
-        g.CheckStatus();
-    }
-
     internal static Body Target(Gladiator g, int y)
     {
         int x = Return.RandomInt(0, y);
-        if (x == 0) return g.LeftLeg;
-        else if (x == 1) return g.Head;
-        else if (x == 2) return g.RightArm;
-        else if (x == 3) return g.RightHand;
-        else if (x == 4) return g.LeftArm;
-        else if (x == 5) return g.LeftHand;
-        else if (x == 6) return g.RightLeg;
+        if (x == 0) return g.Torso.LeftLeg;
+        else if (x == 1) return g.Torso.Head;
+        else if (x == 2) return g.Torso.RightArm;
+        else if (x == 3) return g.Torso.RightArm.Hand;
+        else if (x == 4) return g.Torso.LeftArm;
+        else if (x == 5) return g.Torso.LeftArm.Hand;
+        else if (x == 6) return g.Torso.RightLeg;
         else return g.Torso;
     }
 }

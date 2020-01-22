@@ -6,6 +6,7 @@ public class Head:Body
 {
     int eyes;
     bool teeth;
+    protected Head head;
     HeadArmor armor;
 
     public Head()
@@ -15,6 +16,14 @@ public class Head:Body
         teeth = true;
         hp = maxHp = 5;
         armor = new HeadArmor(0, 0);
+    }
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);        
+    }
+    public override void CheckStatus()
+    {
+        base.CheckStatus();
     }
     public HeadArmor Armor { get { return armor; } set { armor = value; } }
     public int Eyes { get { return eyes; } set { eyes = value; } }

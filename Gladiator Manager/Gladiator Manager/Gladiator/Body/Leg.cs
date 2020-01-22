@@ -12,6 +12,10 @@ public class Leg : Body
         hp = maxHp = 5;
         armor = new LegArmor(0, 0);
     }
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+    }
     public LegArmor Armor { get { return armor; } set { armor = value; } }
     public bool Peg { get { return peg; } set { peg = value; } }
 }

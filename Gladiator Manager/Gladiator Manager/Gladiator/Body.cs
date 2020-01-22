@@ -7,14 +7,56 @@ public class Body
     protected int maxHp;
     protected int hp;
     protected bool destroyed;
+    protected bool undamaged;
+    protected bool damaged;
+    protected bool severelyDamaged;
+    protected bool dead;
 
     public Body()
     {
-       
+        undamaged = true;
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }
     public bool Destroyed { get { return destroyed; } set { destroyed = value; } }
-    public void CheckStatus() { destroyed = (hp <= 0) ? true : false; }
-    public string Status { get { return (hp == maxHp) ? Colour.HEALTH + "Undamaged" + Colour.RESET : (hp <= 0) ? Colour.DAMAGE + "Destroyed" + Colour.RESET : (hp < maxHp && (hp == 1 && hp == 2)) ? Colour.GOLD + "Severely Damaged" + Colour.RESET : Colour.HIT + "Damaged" + Colour.RESET; }}
+    public bool Undamaged { get { return undamaged; } set { undamaged = value; } }
+    public bool Damaged { get { return damaged; } set { damaged = value; } }
+    public bool SeverelyDamaged { get { return severelyDamaged; } set { severelyDamaged = value; } }
+    public virtual void CheckStatus() 
+    {
+        if (hp <= 0)
+        {
+            destroyed = true;
+            undamaged = false;
+            damaged = false;
+            severelyDamaged = false;
+        }
+        else if (hp == maxHp)
+        {
+            destroyed = false;
+            undamaged = true;
+            damaged = false;
+            severelyDamaged = false;
+        }
+        else if (hp < maxHp && (hp == 1 && hp == 2))
+        {
+            destroyed = false;
+            undamaged = false;
+            damaged = false;
+            severelyDamaged = true;
+        }
+        else 
+        {
+            destroyed = false;
+            undamaged = false;
+            damaged = true;
+            severelyDamaged = false;
+        }        
+    }
+    public virtual void TakeDamage(int damage)
+    {
+        hp -= damage;
+        CheckStatus(); 
+    }
+    public string Status { get { return (undamaged) ? Colour.HEALTH + "Undamaged" + Colour.RESET : (destroyed) ? Colour.DAMAGE + "Destroyed" + Colour.RESET : (severelyDamaged) ? Colour.GOLD + "Severely Damaged" + Colour.RESET : Colour.HIT + "Damaged" + Colour.RESET; }}
 }

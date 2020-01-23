@@ -15,11 +15,20 @@ public class Head:Body
         eyes = 2;
         teeth = true;
         hp = maxHp = 5;
-        armor = new HeadArmor(0, 0);
+        armor = new HeadArmor(1, 1);
     }
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);        
+        if (armor.HP > 0)
+        {
+            if (armor.HP >= damage) armor.TakeDamage(damage);
+            else
+            {
+                armor.TakeDamage(armor.HP);
+                base.TakeDamage(damage - armor.HP);
+            }
+        }
+        else base.TakeDamage(damage);
     }
     public override void CheckStatus()
     {

@@ -12,7 +12,7 @@ public class Hand : Body
     :base()
     {
         hp = maxHp = 5;
-        armor = new HandArmor(0, 0);
+        armor = new HandArmor(1, 0);
         weapon = new Blade(1, 0);
     }
     public void Attack(Gladiator attacker, Gladiator defender) 
@@ -28,7 +28,16 @@ public class Hand : Body
     }
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
+        if (armor.HP > 0)
+        {
+            if (armor.HP >= damage) armor.TakeDamage(damage);
+            else
+            {
+                armor.TakeDamage(armor.HP);
+                base.TakeDamage(damage - armor.HP);
+            }
+        }
+        else base.TakeDamage(damage);
     }
     public Weapon Weapon { get { return weapon; } set { weapon = value; } }
     public HandArmor Armor { get { return armor; } set { armor = value; } }

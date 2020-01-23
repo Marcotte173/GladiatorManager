@@ -12,12 +12,21 @@ public class Arm:Body
     : base()
     {
         hp = maxHp = 5;
-        armor = new ArmArmor(0, 0);
+        armor = new ArmArmor(1, 0);
         hand = new Hand(false);
     }
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
+        if (armor.HP > 0)
+        {
+            if (armor.HP >= damage) armor.TakeDamage(damage);
+            else
+            {
+                armor.TakeDamage(armor.HP);
+                base.TakeDamage(damage - armor.HP);
+            }
+        }
+        else base.TakeDamage(damage);
     }
     public override void CheckStatus()
     {

@@ -20,7 +20,7 @@ public class Torso : Body
         rightLeg = new Leg();
         leftLeg = new Leg();
         hp = maxHp = 5;
-        armor = new TorsoArmor(0, 0);
+        armor = new TorsoArmor(1, 0);
         leftArm.Hand.Weapon = new Blade(0, 0);
     }
     public Arm RightArm { get { return rightArm; } set { rightArm = value; } }
@@ -29,7 +29,16 @@ public class Torso : Body
     public Leg LeftLeg { get { return leftLeg; } set { leftLeg = value; } }
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
+        if (armor.HP > 0)
+        {
+            if(armor.HP >= damage) armor.TakeDamage(damage);
+            else
+            {
+                armor.TakeDamage(armor.HP);
+                base.TakeDamage(damage - armor.HP);
+            }
+        }
+        else base.TakeDamage(damage);
     }
     public override void CheckStatus()
     {

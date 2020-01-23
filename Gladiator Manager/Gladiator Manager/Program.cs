@@ -40,19 +40,20 @@ namespace Gladiator_Manager
 
         private static void Display(int x, Gladiator g)
         {
-            Write.Character(x, 1, g.Name,"");
-            Write.Character(x, 2, "Strength", $"{g.Strength}");
-            Write.Character(x, 3, "Agility", $"{g.Agility}");
-            Write.Character(x, 4, "Offence", $"{g.Offence}");
-            Write.Character(x, 5, "Defence", $"{g.Defence}");
-            Write.Character(x, 7, "Head", $"{g.Torso.Head.Status}");
-            Write.Character(x, 8, "Torso", $"{g.Torso.Status}");
-            Write.Character(x, 9, "Right Arm", $"{g.Torso.RightArm.Status}");
-            Write.Character(x, 10, "Right Hand", $"{g.Torso.RightArm.Hand.Status}");
-            Write.Character(x, 11, "Left Arm", $"{g.Torso.LeftArm.Status}");
-            Write.Character(x, 12, "Left Hand", $"{g.Torso.LeftArm.Hand.Status}");
-            Write.Character(x, 13, "Right Leg", $"{g.Torso.RightLeg.Status}");
-            Write.Character(x, 14, "Left Leg", $"{g.Torso.LeftLeg.Status}");
+            Write.Character(x, 1, g.Name,"", "");
+            Write.Character(x, 2, "Strength", $"{g.Strength}","");
+            Write.Character(x, 3, "Agility", $"{g.Agility}", "");
+            Write.Character(x, 4, "Offence", $"{g.Offence}", "");
+            Write.Character(x, 5, "Defence", $"{g.Defence}", "");
+            Write.Character(x, 8, "LOCATION", $"STATUS", "ARMOR");
+            Write.Character(x, 9, "Head",       g.Torso.Head.Status, g.Torso.Head.Armor.Status);
+            Write.Character(x, 10, "Torso",     g.Torso.Status,g.Torso.Armor.Status);
+            Write.Character(x, 11, "Right Arm", g.Torso.RightArm.Status,g.Torso.RightArm.Armor.Status);
+            Write.Character(x, 12, "Right Hand",g.Torso.RightArm.Hand.Status, g.Torso.RightArm.Hand.Armor.Status);
+            Write.Character(x, 13, "Left Arm",  g.Torso.LeftArm.Status, g.Torso.LeftArm.Armor.Status);
+            Write.Character(x, 14, "Left Hand", g.Torso.LeftArm.Hand.Status, g.Torso.LeftArm.Hand.Armor.Status);
+            Write.Character(x, 15, "Right Leg", g.Torso.RightLeg.Status,g.Torso.RightLeg.Armor.Status);
+            Write.Character(x, 16, "Left Leg",  g.Torso.LeftLeg.Status, g.Torso.LeftLeg.Armor.Status);
         }
     }
 }

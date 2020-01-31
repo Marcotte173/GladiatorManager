@@ -8,19 +8,23 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "C:\\Users\\travi\\.nuget\\packages\\": {}
+    "C:\\Users\\Marcotte\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\GladiatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
+      "projectUniqueName": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
       "projectName": "Gladiator Manager",
-      "projectPath": "C:\\GladiatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
-      "packagesPath": "C:\\Users\\travi\\.nuget\\packages\\",
-      "outputPath": "C:\\GladiatorManager\\Gladiator Manager\\Gladiator Manager\\obj\\",
+      "projectPath": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
+      "packagesPath": "C:\\Users\\Marcotte\\.nuget\\packages\\",
+      "outputPath": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\travi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Marcotte\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

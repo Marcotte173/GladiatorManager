@@ -8,5 +8,6 @@ public class LegArmor : Armor
     : base(level, tier)
     {
         HP = MaxHP = 2 + level;
+        name = $"{quality}{material}Legs";
     }
 }

@@ -12,7 +12,7 @@ public class TorsoArmor : Armor
         rightArmArmor = new ArmArmor(level, tier);
         leftArmArmor = new ArmArmor(level, tier);
         HP = MaxHP = level + 1;
-        name =  "Battered Chest" ;
+        name = $"{quality}{material}Chest";
     }
     public ArmArmor RightArmArmor { get { return rightArmArmor; } set { rightArmArmor = value; } }
     public ArmArmor LeftArmArmor { get { return leftArmArmor; } set { leftArmArmor = value; } }

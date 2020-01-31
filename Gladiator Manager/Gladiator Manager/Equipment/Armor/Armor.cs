@@ -12,10 +12,14 @@ public class Armor:Equipment
     protected bool undamaged;
     protected bool damaged;
     protected bool severelyDamaged;
+    protected string quality;
+    protected string material;
     public Armor(int level, int tier)
     : base(level,tier)
     {
         undamaged = true;
+        quality = (tier == 0) ? "Battered " : (tier == 1) ? "" : (tier == 2) ? "Nice " : "Superior ";
+        material = (level == 0) ? "None" : (level == 1) ? "Leather " : (level == 2) ? "Chain " : "Plate ";
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }

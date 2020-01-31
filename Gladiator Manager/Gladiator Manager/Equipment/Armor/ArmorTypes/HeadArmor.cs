@@ -8,6 +8,6 @@ public class HeadArmor:Armor
     : base(level, tier)
     {
         HP = MaxHP = level*2;
-        name = "Leather Cap";
+        name = $"{quality}{material}Cap";
     }
 }

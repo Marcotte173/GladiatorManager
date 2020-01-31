@@ -13,7 +13,7 @@ public class Blade : Weapon
     {
         if (attacker.Offence + Return.RandomInt(0, 3) > defender.Defence + Return.RandomInt(0, 3))
         {
-            Body body = Combat.Target(defender, 9);
+            Body body = attacker.Target(defender, 9);
             int Damage = (attacker.Strength / 2) + attacker.Torso.RightArm.Hand.Weapon.Damage;
             body.TakeDamage(Damage);
             Console.WriteLine($"{attacker.Name} slashes {defender.Name} in the {body} for {Damage}");

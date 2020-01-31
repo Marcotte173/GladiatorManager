@@ -19,7 +19,7 @@ public class Hand : Body
     {
         if (attacker.Offence + Return.RandomInt(0, 3) > defender.Defence + Return.RandomInt(0, 3))
         {
-            Body body = Combat.Target(defender, 9);
+            Body body = attacker.Target(defender, 9);
             int Damage = (attacker.Strength / 2);
             body.TakeDamage(Damage);
             Console.WriteLine($"{attacker.Name} punches {defender.Name} in the {body} for {attacker.Strength / 2}");

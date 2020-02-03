@@ -4,16 +4,17 @@ using System.Text;
 
 public class Arena:Location
 {
-    internal static Gladiator Marcotte = new Gladiator();
-    internal static Gladiator Lincoln = new Gladiator();
+    internal static Gladiator Gladiator1 = new Gladiator(2);
+    internal static Gladiator Gladiator2 = new Gladiator(2);
     public Arena()
     :base()
     {
-        Marcotte.Name = "Marcotte";
-        Lincoln.Name = "Lincoln";
+        Gladiator1.Name = "Marcotte";
+        Gladiator2.Name = "Lincoln";
     }
     public override void Menu()
     {
+        base.Menu();
         UI();
         Console.ReadLine();
         Fight();
@@ -23,11 +24,11 @@ public class Arena:Location
     {
         Console.Clear();
         Console.SetCursorPosition(0, 21);
-        Marcotte.Attack(Lincoln);
-        Lincoln.Attack(Marcotte);
+        Gladiator1.Attack(Gladiator2);
+        Gladiator2.Attack(Gladiator1);
         UI();
-        if (Marcotte.DeathCheck()) EndFight(Lincoln, Marcotte);
-        else if (Lincoln.DeathCheck()) EndFight(Marcotte, Lincoln);
+        if (Gladiator1.DeathCheck()) EndFight(Gladiator2, Gladiator1);
+        else if (Gladiator2.DeathCheck()) EndFight(Gladiator1, Gladiator2);
         Console.ReadKey(true);
         Fight();
     }
@@ -41,29 +42,28 @@ public class Arena:Location
 
     private static void UI()
     {
-        Display(0, Marcotte);
+        Display(0, Gladiator1);
         for (int i = 0; i < 120; i++)
         {
             Write.Line(i, 10, "-");
             Write.Line(i, 20, "-");
         }
-        for (int i = 0; i < 19; i++)
+        for (int i = 0; i < 20; i++)
         {
             Write.Line(58, i, Colour.MITIGATION +"|"+Colour.RESET);
             Write.Line(59, i, Colour.MITIGATION +"|"+Colour.RESET);
         }
         Write.Line(58, 20, "+");
         Write.Line(59, 20, "+");
-        Display(60, Lincoln);
+        Display(60, Gladiator2);
     }
 
     private static void Display(int x, Gladiator g)
     {
         Write.Character(x, 0, g.Name, "", "");
         Write.Line(x, 2, $"Strength   {g.Strength}");   
-        Write.Line(x, 3, $"Agility    {g.Agility}");   
-        Write.Line(x, 4, $"Offence    {g.Offence}");   
-        Write.Line(x, 5, $"Defence    {g.Defence}");
+        Write.Line(x, 3, $"Offence    {g.Offence}");   
+        Write.Line(x, 4, $"Defence    {g.Defence}");
         Write.Line(x + 15, 0, Colour.SPEAK + "Head Armor" + Colour.RESET             );   
         Write.Line(x + 15, 1, Colour.ITEM + g.Torso.Head.Armor.Name + Colour.RESET    );  
         Write.Line(x + 15, 2, Colour.SPEAK + "Body Armor" + Colour.RESET             );   
@@ -85,8 +85,8 @@ public class Arena:Location
         Write.Character(x, 19, "Left Leg",      g.Torso.LeftLeg.Status,         g.Torso.LeftLeg.Armor.Status);
         Write.Line(x + 43, 0, Colour.SPEAK + "Main Hand" + Colour.RESET);  
         Write.Line(x + 43, 2, Colour.SPEAK + "Off Hand" + Colour.RESET);
-        Write.Line(x + 43, 1, Colour.ITEM + g.Torso.RightArm.Hand.Weapon + Colour.RESET);
-        Write.Line(x + 43, 3, Colour.ITEM + g.Torso.LeftArm.Hand.Weapon + Colour.RESET);
+        Write.Line(x + 43, 1, Colour.ITEM + g.Torso.RightArm.Hand.Weapon.Name + Colour.RESET);
+        Write.Line(x + 43, 3, Colour.ITEM + g.Torso.LeftArm.Hand.Weapon.Name + Colour.RESET);
         Write.Line(x + 45, 11, "Traits");
     }
 }

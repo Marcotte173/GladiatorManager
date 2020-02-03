@@ -15,7 +15,7 @@ public class Head:Body
         eyes = 2;
         teeth = true;
         hp = maxHp = 5;
-        armor = new HeadArmor(1, 1);
+        armor = new HeadArmor(0, 0);
     }
     public override void TakeDamage(int damage)
     {

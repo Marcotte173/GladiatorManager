@@ -20,8 +20,7 @@ public class Torso : Body
         rightLeg = new Leg();
         leftLeg = new Leg();
         hp = maxHp = 5;
-        armor = new TorsoArmor(1, 0);
-        leftArm.Hand.Weapon = new Blade(0, 0);
+        armor = new TorsoArmor(0, 0);
     }
     public Arm RightArm { get { return rightArm; } set { rightArm = value; } }
     public Arm LeftArm { get { return leftArm; } set { leftArm = value; } }

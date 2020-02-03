@@ -9,5 +9,6 @@ public class LegArmor : Armor
     {
         HP = MaxHP = 2 + level;
         name = $"{quality}{material}Legs";
+        if (level == 0) name = "None";
     }
 }

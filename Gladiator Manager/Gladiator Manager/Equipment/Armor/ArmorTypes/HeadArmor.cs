@@ -9,5 +9,6 @@ public class HeadArmor:Armor
     {
         HP = MaxHP = level*2;
         name = $"{quality}{material}Cap";
+        if (level == 0) name = "None";
     }
 }

@@ -19,7 +19,7 @@ public class Armor:Equipment
     {
         undamaged = true;
         quality = (tier == 0) ? "Battered " : (tier == 1) ? "" : (tier == 2) ? "Nice " : "Superior ";
-        material = (level == 0) ? "None" : (level == 1) ? "Leather " : (level == 2) ? "Chain " : "Plate ";
+        material = (level == 0) ? "None" : (level == 1) ? "Leather " : (level == 2) ? "Chain " : "Plate ";        
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }

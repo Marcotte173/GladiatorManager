@@ -8,6 +8,7 @@ public class Blade : Weapon
     : base(level, tier)
     {
         damage = level + tier*2;
+        if (level == 0) name = "None";
     }
     public override void Attack(Gladiator attacker, Gladiator defender)
     {

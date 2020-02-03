@@ -12,8 +12,8 @@ public class Arm:Body
     : base()
     {
         hp = maxHp = 5;
-        armor = new ArmArmor(1, 0);
         hand = new Hand(false);
+        armor = new ArmArmor(0, 0);
     }
     public override void TakeDamage(int damage)
     {

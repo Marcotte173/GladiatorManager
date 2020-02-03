@@ -9,5 +9,6 @@ public class HandArmor : Armor
     {
         HP = MaxHP = 2 + level;
         name = $"{quality}{material}Gloves";
+        if (level == 0) name = "None";
     }
 }

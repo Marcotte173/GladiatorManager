@@ -9,5 +9,6 @@ public class ArmArmor : Armor
     {
         HP = MaxHP = 2 + level;
         name =$"{quality}{material}Vambraces" ;
+        if (level == 0) name = "None";
     }
 }

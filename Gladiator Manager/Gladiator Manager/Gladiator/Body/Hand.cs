@@ -12,19 +12,19 @@ public class Hand : Body
     :base()
     {
         hp = maxHp = 5;
-        armor = new HandArmor(1, 0);
-        weapon = new Blade(1, 0);
+        armor = new HandArmor(0, 0);
+        weapon = new Blade(0, 0);
     }
     public void Attack(Gladiator attacker, Gladiator defender) 
     {
         if (attacker.Offence + Return.RandomInt(0, 3) > defender.Defence + Return.RandomInt(0, 3))
         {
             Body body = attacker.Target(defender, 9);
-            int Damage = (attacker.Strength / 2);
-            body.TakeDamage(Damage);
-            Console.WriteLine($"{attacker.Name} punches {defender.Name} in the {body} for {attacker.Strength / 2}");
+            int damage = (attacker.Strength / 2);
+            body.TakeDamage(damage);
+            Console.WriteLine($"{attacker.Name} punches {defender.Name} in the {body} for {damage}");
         }
-        else Console.WriteLine($"{attacker.Name}punches but {defender.Name} blocks!");
+        else Console.WriteLine($"{attacker.Name} punches but {defender.Name} blocks!");
     }
     public override void TakeDamage(int damage)
     {

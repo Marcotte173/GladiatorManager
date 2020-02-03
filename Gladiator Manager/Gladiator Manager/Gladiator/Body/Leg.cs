@@ -10,7 +10,7 @@ public class Leg : Body
     : base()
     {
         hp = maxHp = 5;
-        armor = new LegArmor(1, 1);
+        armor = new LegArmor(0, 0);
     }
     public override void TakeDamage(int damage)
     {

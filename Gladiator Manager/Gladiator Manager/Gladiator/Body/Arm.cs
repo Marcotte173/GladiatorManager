@@ -31,7 +31,7 @@ public class Arm:Body
     public override void CheckStatus()
     {
         base.CheckStatus();
-        if (destroyed) hand.HP = 0;
+        if (disabled) hand.HP = 0;
         hand.CheckStatus();
     }
     public Hand Hand { get { return hand; } set { hand = value; } }

@@ -15,6 +15,7 @@ public class Gladiator
     protected bool rightHanded;
     protected int win;
     protected int price;
+    protected bool player;
     public static List<string> list = new List<string> { };
 
     public Gladiator(int x)
@@ -38,6 +39,7 @@ public class Gladiator
     public int Creative { get { return creative; } set { creative = value; } }
     public int Endurance { get { return endurance; } set { endurance = value; } }
     public bool RightHanded { get { return rightHanded; } set { rightHanded = value; } }
+    public bool Player { get { return player; } set { player = value; } }
     public Torso Torso { get { return torso; } set { torso = value; } }
     public int Price 
     { 

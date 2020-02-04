@@ -6,51 +6,51 @@ public class Body
 {
     protected int maxHp;
     protected int hp;
-    protected bool destroyed;
-    protected bool undamaged;
-    protected bool damaged;
-    protected bool severelyDamaged;
+    protected bool disabled;
+    protected bool uninjured;
+    protected bool injured;
+    protected bool severelyInjured;
     protected bool dead;
 
     public Body()
     {
-        undamaged = true;
+        uninjured = true;
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }
-    public bool Destroyed { get { return destroyed; } set { destroyed = value; } }
-    public bool Undamaged { get { return undamaged; } set { undamaged = value; } }
-    public bool Damaged { get { return damaged; } set { damaged = value; } }
-    public bool SeverelyDamaged { get { return severelyDamaged; } set { severelyDamaged = value; } }
+    public bool Destroyed { get { return disabled; } set { disabled = value; } }
+    public bool Undamaged { get { return uninjured; } set { uninjured = value; } }
+    public bool Damaged { get { return injured; } set { injured = value; } }
+    public bool SeverelyDamaged { get { return severelyInjured; } set { severelyInjured = value; } }
     public virtual void CheckStatus() 
     {
         if (hp <= 0)
         {
-            destroyed = true;
-            undamaged = false;
-            damaged = false;
-            severelyDamaged = false;
+            disabled = true;
+            uninjured = false;
+            injured = false;
+            severelyInjured = false;
         }
         else if (hp == maxHp)
         {
-            destroyed = false;
-            undamaged = true;
-            damaged = false;
-            severelyDamaged = false;
+            disabled = false;
+            uninjured = true;
+            injured = false;
+            severelyInjured = false;
         }
         else if (hp < maxHp && (hp == 1 && hp == 2))
         {
-            destroyed = false;
-            undamaged = false;
-            damaged = false;
-            severelyDamaged = true;
+            disabled = false;
+            uninjured = false;
+            injured = false;
+            severelyInjured = true;
         }
         else 
         {
-            destroyed = false;
-            undamaged = false;
-            damaged = true;
-            severelyDamaged = false;
+            disabled = false;
+            uninjured = false;
+            injured = true;
+            severelyInjured = false;
         }        
     }
     public virtual void TakeDamage(int damage)
@@ -58,5 +58,5 @@ public class Body
         hp -= damage;
         CheckStatus(); 
     }
-    public string Status { get { return (undamaged) ? Colour.HEALTH + "Undamaged" + Colour.RESET : (destroyed) ? Colour.DAMAGE + "Destroyed" + Colour.RESET : (severelyDamaged) ? Colour.GOLD + "Severely Damaged" + Colour.RESET : Colour.HIT + "Damaged" + Colour.RESET; }}
+    public string Status { get { return (uninjured) ? Colour.HEALTH + "Uninjured" + Colour.RESET : (disabled) ? Colour.DAMAGE + "Disabled" + Colour.RESET : (severelyInjured) ? Colour.GOLD + "Severely Injured" + Colour.RESET : Colour.HIT + "Injured" + Colour.RESET; }}
 }

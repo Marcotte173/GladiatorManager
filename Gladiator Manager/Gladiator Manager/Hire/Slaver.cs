@@ -82,6 +82,7 @@ public class Slaver : Location
             if (Player.p.Roster[i] == null)
             {
                 full = false;
+                g.Player = true;
                 Player.p.Roster[i] = g;
                 list.Remove(g);
                 break;

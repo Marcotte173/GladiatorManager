@@ -1,43 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Text;
 
 public class Arena:Location
 {
     internal static Gladiator Gladiator1 = new Gladiator(2);
     internal static Gladiator Gladiator2 = new Gladiator(2);
+    internal static bool player;
     public Arena()
     :base()
     {
-        Gladiator1.Name = "Marcotte";
-        Gladiator2.Name = "Lincoln";
+        
     }
     public override void Menu()
     {
-        base.Menu();
-        UI();
-        Console.ReadLine();
-        Fight();
+        if (Gladiator1.Player || Gladiator2.Player)
+        {
+            base.Menu();
+            UI();
+            player = true;
+        }
+        else player = false;
+        Fight();   
+    }
+
+    private static void SetOpponents(Gladiator a, Gladiator b)
+    {
+        Gladiator1 = a;
+        Gladiator2 = b;
     }
 
     private void Fight()
     {
-        Console.Clear();
-        Console.SetCursorPosition(0, 21);
+        if (player)
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0, 21);
+        }        
         Gladiator1.Attack(Gladiator2);
         Gladiator2.Attack(Gladiator1);
-        UI();
-        if (Gladiator1.DeathCheck()) EndFight(Gladiator2, Gladiator1);
-        else if (Gladiator2.DeathCheck()) EndFight(Gladiator1, Gladiator2);
-        Console.ReadKey(true);
+        if (player) UI();
+        if (Gladiator1.DeathCheck())
+        {
+            if( player) EndFight(Gladiator2, Gladiator1);
+            Recap.list.Add($"{Gladiator2.Name} defeated {Gladiator1.Name}");
+            PermanentDamage(Gladiator2);
+            PermanentDamage(Gladiator1);
+            Recap.list.Add("");
+        }
+        else if (Gladiator2.DeathCheck())
+        {
+            if (player) EndFight(Gladiator1, Gladiator2);
+            Recap.list.Add($"{Gladiator1.Name} defeated {Gladiator2.Name}");
+            PermanentDamage(Gladiator1);
+            PermanentDamage(Gladiator2);
+            Recap.list.Add("");
+        }        
+        if (player) Thread.Sleep(500);
         Fight();
     }
+
+    private void PermanentDamage(Gladiator gladiator1)
+    {
+        
+    }
+
     private static void EndFight(Gladiator a, Gladiator b)
     {
         Console.SetCursorPosition(0, 26);
         Console.WriteLine(Colour.NAME + $"{b.Name} " + Colour.RESET + "has been killed by " + Colour.NAME + a.Name + "!");
-        Console.ReadKey(true);
-        Environment.Exit(0);
+        Write.KeyPress();
     }
 
     private static void UI()

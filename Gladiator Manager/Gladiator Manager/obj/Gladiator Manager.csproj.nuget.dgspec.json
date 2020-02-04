@@ -1,28 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Gladiator\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj": {}
+    "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj": {}
   },
   "projects": {
-    "C:\\Gladiator\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj": {
+    "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Gladiator\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
+        "projectUniqueName": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
         "projectName": "Gladiator Manager",
-        "projectPath": "C:\\Gladiator\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
-        "packagesPath": "C:\\Users\\tmarcott\\.nuget\\packages\\",
-        "outputPath": "C:\\Gladiator\\Gladiator Manager\\Gladiator Manager\\obj\\",
+        "projectPath": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\Gladiator Manager.csproj",
+        "packagesPath": "C:\\Users\\Marcotte\\.nuget\\packages\\",
+        "outputPath": "C:\\GlaidatorManager\\Gladiator Manager\\Gladiator Manager\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\tmarcott\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Marcotte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -48,30 +50,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.0.1, 3.0.1]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.0.0, 3.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

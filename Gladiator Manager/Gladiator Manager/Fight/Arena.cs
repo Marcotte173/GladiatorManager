@@ -61,9 +61,11 @@ public class Arena:Location
     private static void Display(int x, Gladiator g)
     {
         Write.Character(x, 0, g.Name, "", "");
-        Write.Line(x, 2, $"Strength   {g.Strength}");   
-        Write.Line(x, 3, $"Offence    {g.Offence}");   
-        Write.Line(x, 4, $"Defence    {g.Defence}");
+        Write.Line(x, 2, $"Strength    {g.Strength}");   
+        Write.Line(x, 3, $"Offence     {g.Offence}");   
+        Write.Line(x, 4, $"Defence     {g.Defence}");
+        Write.Line(x, 5, $"Endurance   {g.Endurance}");
+        Write.Line(x, 6, $"Initiative  {g.Initiative}");
         Write.Line(x + 15, 0, Colour.SPEAK + "Head Armor" + Colour.RESET             );   
         Write.Line(x + 15, 1, Colour.ITEM + g.Torso.Head.Armor.Name + Colour.RESET    );  
         Write.Line(x + 15, 2, Colour.SPEAK + "Body Armor" + Colour.RESET             );   

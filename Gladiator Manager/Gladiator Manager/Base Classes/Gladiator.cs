@@ -13,6 +13,9 @@ public class Gladiator
     protected int creative;  
     protected Torso torso;
     protected bool rightHanded;
+    protected int win;
+    protected int price;
+    public static List<string> list = new List<string> { };
 
     public Gladiator(int x)
     {
@@ -23,12 +26,15 @@ public class Gladiator
         initiative = x + Return.RandomInt(0, 2 + x);
         torso = new Torso();
         rightHanded = true;
+        price = (strength + offence + defence + endurance + initiative) / 5 * 375 + Return.RandomInt(-250, 251);
+        name = list[Return.RandomInt(0, list.Count)];
     }
     public string Name { get { return name; } set { name = value; } }
     public int Strength { get { return strength; } set { strength = value; } }
     public int Initiative { get { return initiative; } set { initiative = value; } }
     public int Offence { get { return offence; } set { offence = value; } }
     public int Defence { get { return defence; } set { defence = value; } }
+    public int Win { get { return win; } set { win = value; } }
     public int Creative { get { return creative; } set { creative = value; } }
     public int Endurance { get { return endurance; } set { endurance = value; } }
     public bool RightHanded { get { return rightHanded; } set { rightHanded = value; } }
@@ -38,7 +44,7 @@ public class Gladiator
         get 
         {
             return
-            (strength + offence + defence + endurance + initiative) / 5 * 375;
+            price;
         } 
     }
     public bool DeathCheck()
@@ -73,8 +79,8 @@ public class Gladiator
         else if (x == 6) return g.Torso.RightLeg;
         else return g.Torso;
     }
-    internal Gladiator Create()
+    internal static void Create(int x)
     {
-        return null;
+        Slaver.list.Add(new Gladiator(x));
     }
 }

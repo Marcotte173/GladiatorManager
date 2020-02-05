@@ -33,7 +33,13 @@ public class Arena:Location
             Attack();
             if (Gladiator1.DeathCheck())
             {
-                if (player) Write.Line($"{Gladiator2.Name} has killed {Gladiator1.Name}");
+                if (player)
+                {
+                    Console.Clear();
+                    UI();
+                    Console.SetCursorPosition(0, 24);
+                    Write.Line($"{Gladiator2.Name} has killed {Gladiator1.Name}");
+                }
                 foreach (Gladiator g in Gladiator1.Owner.Roster)
                 {
                     if (g == Gladiator1) Gladiator1 = null;
@@ -42,7 +48,13 @@ public class Arena:Location
             }
             if (Gladiator2.DeathCheck())
             {
-                if (player) Write.Line($"{Gladiator1.Name} has killed {Gladiator2.Name}");
+                if (player)
+                {
+                    Console.Clear();
+                    UI();
+                    Console.SetCursorPosition(0, 24);
+                    Write.Line($"{Gladiator1.Name} has killed {Gladiator2.Name}");
+                }
                 foreach (Gladiator g in Gladiator2.Owner.Roster)
                 {
                     if (g == Gladiator2) Gladiator2 = null;
@@ -52,40 +64,150 @@ public class Arena:Location
             Thread.Sleep(1000);
         }
         Write.KeyPress();
-        if (Gladiator1.DeathCheck() == false && Gladiator1.DeathCheck() == false) Fight();
+        if (Gladiator1 != null && Gladiator2 != null) Fight();
     }
 
     private void Attack()
     {
-        int attackRoll = Return.RandomInt(1, 101);
-        attackRoll -= (Gladiator1.Torso.RightArm.Hand.Weapon.Level < 1) ? 0 : Gladiator1.Torso.RightArm.Hand.Weapon.Level;
-        attackRoll -= Gladiator1.Offence;
-        attackRoll += (Gladiator2.Torso.RightArm.Hand.Weapon.Level < 1) ? 0 : Gladiator2.Torso.RightArm.Hand.Weapon.Level;
-        attackRoll += Gladiator2.Offence;
-        int x = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
-        int y = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
-        if (attackRoll < (45 - Gladiator2.Defence - x))
+        int attackRoll = Return.RandomInt(1, 21);
+        if (attackRoll != 20 && attackRoll != 1)
         {
-            //Gladiator1 strikes
-            int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
-            Body body = Target(Gladiator2);
-            body.TakeDamage(damage);
-            if (player) Write.Line($"{Gladiator1.Name} strikes {Gladiator2.Name} for {damage} damage");
-        }
-        else if (attackRoll > (55 + Gladiator1.Defence + y))
-        {
-            //Gladiator2 strikes
-            int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
-            Body body = Target(Gladiator1);
-            body.TakeDamage(damage);
-            Write.Line($"The gladiators square off, neither gaining a real advantage");
-            if (player) Write.Line($"{Gladiator2.Name} strikes {Gladiator1.Name} for {damage} damage");
+            attackRoll -= Gladiator1.Offence;
+            attackRoll += Gladiator2.Offence;
+            if (attackRoll < 10)
+            {
+                attackRoll += Gladiator2.Defence - Gladiator1.Offence;
+                attackRoll = (attackRoll > 10) ? 10 : attackRoll;
+            }
+            if (attackRoll > 10)
+            {
+                attackRoll += Gladiator1.Defence - Gladiator2.Offence;
+                attackRoll = (attackRoll < 10) ? 10 : attackRoll;
+            }
+            int x = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+            int y = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
+            if (attackRoll < (9 - x) && attackRoll >= (5-x))
+            {
+                //Gladiator1 strikes
+                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator2);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 1));
+            }
+            else if (attackRoll < (5 - x) && attackRoll >=(2-x))
+            {
+                //Gladiator1 strikes
+                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 1;
+                Body body = Target(Gladiator2);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 2));
+            }
+            else if (attackRoll < (2 - x))
+            {
+                //Gladiator1 strikes
+                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 2;
+                Body body = Target(Gladiator2);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
+            }
+            else if (attackRoll > (11 + y) && attackRoll <=(15+y))
+            {
+                //Gladiator2 strikes
+                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator1);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 1));
+            }
+            else if (attackRoll > (15 + y) && attackRoll <= (19 + y))
+            {
+                //Gladiator2 strikes
+                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator1);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 2));
+            }
+            else if (attackRoll > (19 + y))
+            {
+                //Gladiator2 strikes
+                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator1);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));
+            }
+            else if(player) Write.Line("The gladiators square off, neither gaining a real advantage");                
         }
         else
         {
-            if (player) Write.Line("The gladiators square off, neither gaining a real advantage");
-        }
+            if (attackRoll == 1)
+            {
+                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage*2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator2);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
+            }
+            if (attackRoll == 20)
+            {
+                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage * 2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                Body body = Target(Gladiator2);
+                body.TakeDamage(damage);
+                if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));
+            }
+        }        
     }
+
+    private string Flavor(Gladiator attacker, Gladiator defender, Body body, int x)
+    {
+        if (body == Gladiator2.Torso.Head || body == Gladiator1.Torso.Head)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if(body == Gladiator2.Torso || body == Gladiator1.Torso)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.RightArm || body == Gladiator1.Torso.RightArm)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.RightArm.Hand || body == Gladiator1.Torso.RightArm.Hand)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.LeftArm || body == Gladiator1.Torso.LeftArm)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.LeftArm.Hand || body == Gladiator1.Torso.LeftArm.Hand)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.RightLeg || body == Gladiator1.Torso.RightLeg)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else if (body == Gladiator2.Torso.LeftLeg || body == Gladiator1.Torso.LeftLeg)
+        {
+            if (x == 1) return $"{attacker.Name} hits {defender.Name} in {body} : level 1";
+            else if (x == 2) return $"{attacker.Name} hits {defender.Name} in {body} : level 2";
+            else return $"{attacker.Name} hits {defender.Name} in {body} : level 3";
+        }
+        else return "";
+    }
+
     internal Body Target(Gladiator g)
     {
         int x = Return.RandomInt(0, 12);

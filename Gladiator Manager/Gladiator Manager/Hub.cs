@@ -21,8 +21,7 @@ public class Hub:Location
         Write.Line(90, 0, $"You have " + Colour.ENERGY + $"{p.Action}" + Colour.RESET + " remaining actions");
         Roster();
         while (day < 21)
-        {
-            
+        {            
             Write.Line(0, 18, "[1] " + Colour.GOLD + "Hire Gladiators\n" + Colour.RESET);
             Write.Line("[2] " + Colour.ENERGY + "Manage Gladiators" + Colour.RESET);
             Write.Line("[3] " + Colour.ITEM + "Purchase Equipment" + Colour.RESET);
@@ -37,16 +36,19 @@ public class Hub:Location
             else Write.Line("[X] " + Colour.MITIGATION + "There are no fights today" + Colour.RESET);
             Write.Line("[0] " + Colour.TIME + "Next day" + Colour.RESET);
             Write.Line("[?] Help");
-
-
             string choice = Return.Option();
             if (choice == "1") Location.list[1].Go();
-            else if (choice == "9") Location.list[2].Go();
+            else if (choice == "9")
+            {
+                Arena.Fight(p.Roster[0],new Gladiator(1));          
+            }
             else if (choice == "0")
             {
                 day++;
                 p.Action = 3;
                 if (day % 3 == 0) Slaver.NewStock();
+                //Arena.Fight();
+                Recap.Go();
             };
             Menu();
         }        
@@ -67,8 +69,5 @@ public class Hub:Location
                 x += 25;
             }
         }
-        
-
-
     }
 }

@@ -15,7 +15,7 @@ public class Gladiator
     protected bool rightHanded;
     protected int win;
     protected int price;
-    protected bool player;
+    protected Player owner;
     public static List<string> list = new List<string> { };
 
     public Gladiator(int x)
@@ -39,7 +39,7 @@ public class Gladiator
     public int Creative { get { return creative; } set { creative = value; } }
     public int Endurance { get { return endurance; } set { endurance = value; } }
     public bool RightHanded { get { return rightHanded; } set { rightHanded = value; } }
-    public bool Player { get { return player; } set { player = value; } }
+    public Player Owner { get { return owner; } set { owner = value; } }
     public Torso Torso { get { return torso; } set { torso = value; } }
     public int Price 
     { 
@@ -51,36 +51,9 @@ public class Gladiator
     }
     public bool DeathCheck()
     {
-        return (Torso.Destroyed|| Torso.Head.Destroyed);
+        return (Torso.Disabled|| Torso.Head.Disabled);
     }
-    public void Attack(Gladiator p)
-    {
-        if (torso.LeftArm.Hand.Destroyed == false && Torso.RightArm.Hand.Destroyed == false)
-        {
-            if (RightHanded) WeaponCheck(Torso.RightArm.Hand, p);
-            else WeaponCheck(Torso.LeftArm.Hand, p);
-        }
-        else if (Torso.LeftArm.Hand.Destroyed && Torso.RightArm.Hand.Destroyed == false) WeaponCheck(Torso.RightArm.Hand, p);
-        else if (Torso.LeftArm.Hand.Destroyed == false && Torso.RightArm.Hand.Destroyed) WeaponCheck(Torso.LeftArm.Hand, p);
-        else if (Torso.LeftArm.Hand.Destroyed && Torso.RightArm.Hand.Destroyed) Console.WriteLine(Name + " cannot attack without arms. He waits for death");
-    }
-    private void WeaponCheck(Hand hand, Gladiator p)
-    {
-        if (hand.Weapon.Level != 0) hand.Weapon.Attack(this,p);
-        else hand.Attack(this,p);
-    }
-    internal Body Target(Gladiator g, int y)
-    {
-        int x = Return.RandomInt(0, y);
-        if (x == 0) return g.Torso.LeftLeg;
-        else if (x == 1) return g.Torso.Head;
-        else if (x == 2) return g.Torso.RightArm;
-        else if (x == 3) return g.Torso.RightArm.Hand;
-        else if (x == 4) return g.Torso.LeftArm;
-        else if (x == 5) return g.Torso.LeftArm.Hand;
-        else if (x == 6) return g.Torso.RightLeg;
-        else return g.Torso;
-    }
+    
     internal static void Create(int x)
     {
         Slaver.list.Add(new Gladiator(x));

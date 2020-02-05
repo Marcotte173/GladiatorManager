@@ -10,7 +10,6 @@ public class Body
     protected bool uninjured;
     protected bool injured;
     protected bool severelyInjured;
-    protected bool dead;
 
     public Body()
     {
@@ -18,7 +17,7 @@ public class Body
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }
-    public bool Destroyed { get { return disabled; } set { disabled = value; } }
+    public bool Disabled { get { return disabled; } set { disabled = value; } }
     public bool Undamaged { get { return uninjured; } set { uninjured = value; } }
     public bool Damaged { get { return injured; } set { injured = value; } }
     public bool SeverelyDamaged { get { return severelyInjured; } set { severelyInjured = value; } }

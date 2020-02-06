@@ -59,7 +59,7 @@ public class Slaver : Location
             if (Write.Confirm(15, 20))
             {
                 Write.Line(0, 25, $"'Wonderful!'\nRizzo takes your money, and {g.Name} joins your team\n");
-                Player.p.Gold -= g.Price;
+                Owner.p.Gold -= g.Price;
                 RosterAdd(g);
                 Write.KeyPress();
                 Location.list[0].Go();
@@ -76,22 +76,17 @@ public class Slaver : Location
 
     private void RosterAdd(Gladiator g)
     {
-        bool full = true;
-        for (int i = 0; i < Player.p.Roster.Length; i++)
+        if (Owner.p.Roster.Count < 5)
         {
-            if (Player.p.Roster[i] == null)
-            {
-                full = false;
-                g.Owner = Player.p;
-                Player.p.Roster[i] = g;
-                list.Remove(g);
-                break;
-            }
-            if (full == true)
-            {
-                Console.Clear();
-            }
+            g.Owner = Owner.p;
+            Owner.p.Roster.Add(g);
         }
+        else
+        {
+            Write.Line("Your roster is full! Release a gladiator!");
+            Write.KeyPress();
+        }
+
     }
 
     private void DisplayGladiator()

@@ -9,7 +9,7 @@ public class Return
 
     internal static bool Afford(int price)
     {
-        return Player.p.Gold >= price;
+        return Owner.p.Gold >= price;
     }
     internal static int Integer()
     {

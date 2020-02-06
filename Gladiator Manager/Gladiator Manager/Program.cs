@@ -4,10 +4,14 @@ namespace Gladiator_Manager
 {
     class Program
     {
-        public static Player p = new Player();
+        public static Owner p = new Owner();        
         static void Main(string[] args)
         {            
             Colour.SetupConsole();
+            for (int i = 0; i < 9; i++)
+            {
+                ComputerOwner.list.Add(new ComputerOwner(Return.RandomInt(2, 5), 2, Return.RandomInt(50, 300), Return.RandomInt(-10, 90)));
+            }
             Write.Line(Colour.RESET);
             string[] names = System.IO.File.ReadAllLines(Environment.CurrentDirectory + "/Names.txt");
             for (int i = 0; i < names.Length; i++) { Gladiator.list.Add(names[i]); }

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-public class Player
+public class Owner
 {    
-    public static Player p = Gladiator_Manager.Program.p;
-    string name;
-    int prestige;
-    int gold;
-    int actions;
-    int win;
-    int loss;
-    Gladiator[] roster = new Gladiator[5] ;
-    public Player()
+    public static Owner p = Gladiator_Manager.Program.p;
+    protected string name;
+    protected int prestige;
+    protected int gold;
+    protected int actions;
+    protected int win;
+    protected int loss;
+    List<Gladiator> roster = new List<Gladiator> { } ;
+    public Owner()
     {
         prestige = 100;
         gold = 1000;
@@ -26,5 +26,5 @@ public class Player
     public int Action { get { return actions; } set { actions = value; } }
     public int Win { get { return win; } set { win = value; } }
     public int Loss { get { return loss; } set { loss = value; } }
-    public Gladiator[] Roster { get { return roster; } set { roster = value; } }
+    public List<Gladiator> Roster { get { return roster; } set { roster = value; } }
 }

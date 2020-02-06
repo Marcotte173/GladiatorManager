@@ -15,56 +15,54 @@ public class Arena:Location
     }
     public override void Menu()
     {
-        if (Gladiator1.Owner == Player.p || Gladiator2.Owner == Player.p) player = true;
+        if (Gladiator1.Owner == Owner.p || Gladiator2.Owner == Owner.p) player = true;
         else player = false;
         Fight();
         
     }
     private void Fight()
     {
-        for (int i = 0; i < 10; i++)
+        while (Gladiator1.DeathCheck() == false && Gladiator2.DeathCheck() == false)
         {
-            if (player)
-            {
-                Console.Clear();
-                UI();
-                Console.SetCursorPosition(0, 22);
-            }
-            Attack();
-            if (Gladiator1.DeathCheck())
+            for (int i = 0; i < 10; i++)
             {
                 if (player)
                 {
                     Console.Clear();
                     UI();
-                    Console.SetCursorPosition(0, 24);
-                    Write.Line($"{Gladiator2.Name} has killed {Gladiator1.Name}");
+                    Console.SetCursorPosition(0, 22);
                 }
-                foreach (Gladiator g in Gladiator1.Owner.Roster)
+                Attack();
+                if (Gladiator1.DeathCheck())
                 {
-                    if (g == Gladiator1) Gladiator1 = null;
-                }                
-                break;
-            }
-            if (Gladiator2.DeathCheck())
-            {
-                if (player)
-                {
-                    Console.Clear();
-                    UI();
-                    Console.SetCursorPosition(0, 24);
-                    Write.Line($"{Gladiator1.Name} has killed {Gladiator2.Name}");
+                    if (player)
+                    {
+                        Console.Clear();
+                        UI();
+                        Console.SetCursorPosition(0, 24);
+                        Write.Line($"{Gladiator2.Name} has killed {Gladiator1.Name}");
+                    }
+                    Gladiator1.Owner.Roster.Remove(Gladiator1);
+                    Write.KeyPress();
+                    Return.ToHub();
                 }
-                foreach (Gladiator g in Gladiator2.Owner.Roster)
+                if (Gladiator2.DeathCheck())
                 {
-                    if (g == Gladiator2) Gladiator2 = null;
-                }                
-                break;
+                    if (player)
+                    {
+                        Console.Clear();
+                        UI();
+                        Console.SetCursorPosition(0, 24);
+                        Write.Line($"{Gladiator1.Name} has killed {Gladiator2.Name}");
+                    }
+                    Gladiator2.Owner.Roster.Remove(Gladiator2);
+                    Write.KeyPress();
+                    Return.ToHub();
+                }
+                Thread.Sleep(1500);
             }
-            Thread.Sleep(1000);
-        }
-        Write.KeyPress();
-        if (Gladiator1 != null && Gladiator2 != null) Fight();
+            Write.KeyPress();
+        }        
     }
 
     private void Attack()
@@ -221,7 +219,7 @@ public class Arena:Location
         else return g.Torso;
     }
 
-    public static void Fight(Gladiator a, Gladiator b)
+    public static void Match(Gladiator a, Gladiator b)
     {
         Gladiator1 = a;
         Gladiator2 = b;
@@ -253,7 +251,6 @@ public class Arena:Location
         Write.Line(x, 3, $"Offence     {g.Offence}");
         Write.Line(x, 4, $"Defence     {g.Defence}");
         Write.Line(x, 5, $"Endurance   {g.Endurance}");
-        Write.Line(x, 6, $"Initiative  {g.Initiative}");
         Write.Line(x + 15, 0, Colour.SPEAK + "Head Armor" + Colour.RESET);
         Write.Line(x + 15, 1, Colour.ITEM + g.Torso.Head.Armor.Name + Colour.RESET);
         Write.Line(x + 15, 2, Colour.SPEAK + "Body Armor" + Colour.RESET);

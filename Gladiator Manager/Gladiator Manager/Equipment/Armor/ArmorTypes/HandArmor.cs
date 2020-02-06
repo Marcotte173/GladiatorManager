@@ -7,7 +7,7 @@ public class HandArmor : Armor
     public HandArmor(int level, int tier)
     : base(level, tier)
     {
-        HP = MaxHP = 2 + level;
+        HP = MaxHP = level;
         name = $"{quality}{material}Gloves";
         if (level == 0) name = "None";
     }

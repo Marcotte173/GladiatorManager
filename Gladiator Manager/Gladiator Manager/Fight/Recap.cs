@@ -13,5 +13,12 @@ public class Recap
             Write.Line(s);
         }
         Write.KeyPress();
+        list.Clear();
+    }
+
+    internal static void Calculate(Gladiator winner, Gladiator loser)
+    {
+        list.Add($"{winner.Name} has defeated {loser.Name}. ");
+
     }
 }

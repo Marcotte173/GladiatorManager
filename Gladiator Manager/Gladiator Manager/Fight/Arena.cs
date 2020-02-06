@@ -22,9 +22,18 @@ public class Arena:Location
     }
     private void Fight()
     {
+        if (player)
+        {
+            Console.Clear();
+            UI();
+            Console.SetCursorPosition(0, 22);
+            Write.Line("Welcome to the arena!\n");
+            Write.Line($"The next match to be fought is between {Gladiator1.Name} and {Gladiator2.Name}!\n");
+            Write.KeyPress();
+        }
         while (Gladiator1.DeathCheck() == false && Gladiator2.DeathCheck() == false)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (player)
                 {
@@ -40,11 +49,10 @@ public class Arena:Location
                         Console.Clear();
                         UI();
                         Console.SetCursorPosition(0, 24);
-                        Write.Line($"{Gladiator2.Name} has killed {Gladiator1.Name}");
+                        Write.Line($"{Gladiator2.Name} has defeated {Gladiator1.Name}");                        
                     }
-                    Gladiator1.Owner.Roster.Remove(Gladiator1);
-                    Write.KeyPress();
-                    Return.ToHub();
+                    Recap.Calculate(Gladiator1, Gladiator2);
+                    break;
                 }
                 if (Gladiator2.DeathCheck())
                 {
@@ -53,16 +61,18 @@ public class Arena:Location
                         Console.Clear();
                         UI();
                         Console.SetCursorPosition(0, 24);
-                        Write.Line($"{Gladiator1.Name} has killed {Gladiator2.Name}");
+                        Write.Line($"{Gladiator1.Name} has defeated {Gladiator2.Name}");                                            
                     }
-                    Gladiator2.Owner.Roster.Remove(Gladiator2);
-                    Write.KeyPress();
-                    Return.ToHub();
+                    Recap.Calculate(Gladiator2, Gladiator1);
+                    break;
                 }
-                Thread.Sleep(1500);
+                if(player)Thread.Sleep(1500);
             }
-            Write.KeyPress();
-        }        
+            Gladiator1.Endurance -= Gladiator1.Fatigue;
+            Gladiator2.Endurance -= Gladiator2.Fatigue;
+            if (player) Write.KeyPress();
+        }    
+        
     }
 
     private void Attack()
@@ -262,18 +272,21 @@ public class Arena:Location
         Write.Line(x + 15, 8, Colour.SPEAK + "Gloves" + Colour.RESET);
         Write.Line(x + 15, 9, Colour.ITEM + g.Torso.RightArm.Hand.Armor.Name + Colour.RESET);
         Write.Character(x, 11, "LOCATION", $"STATUS", "ARMOR");
-        Write.Character(x, 12, "Head", g.Torso.Head.Status, g.Torso.Head.Armor.Status);
-        Write.Character(x, 13, "Torso", g.Torso.Status, g.Torso.Armor.Status);
-        Write.Character(x, 14, "Right Arm", g.Torso.RightArm.Status, g.Torso.RightArm.Armor.Status);
-        Write.Character(x, 15, "Right Hand", g.Torso.RightArm.Hand.Status, g.Torso.RightArm.Hand.Armor.Status);
-        Write.Character(x, 16, "Left Arm", g.Torso.LeftArm.Status, g.Torso.LeftArm.Armor.Status);
-        Write.Character(x, 17, "Left Hand", g.Torso.LeftArm.Hand.Status, g.Torso.LeftArm.Hand.Armor.Status);
-        Write.Character(x, 18, "Right Leg", g.Torso.RightLeg.Status, g.Torso.RightLeg.Armor.Status);
-        Write.Character(x, 19, "Left Leg", g.Torso.LeftLeg.Status, g.Torso.LeftLeg.Armor.Status);
+        Write.Character(x, 12, "Head", g.Torso.Head.Status,                 g.Torso.Head.Armor.Status);
+        Write.Character(x, 13, "Torso", g.Torso.Status,                     g.Torso.Armor.Status);
+        Write.Character(x, 14, "Right Arm", g.Torso.RightArm.Status,        g.Torso.RightArm.Armor.Status);
+        Write.Character(x, 15, "Right Hand", g.Torso.RightArm.Hand.Status,  g.Torso.RightArm.Hand.Armor.Status);
+        Write.Character(x, 16, "Left Arm", g.Torso.LeftArm.Status,          g.Torso.LeftArm.Armor.Status);
+        Write.Character(x, 17, "Left Hand", g.Torso.LeftArm.Hand.Status,    g.Torso.LeftArm.Hand.Armor.Status);
+        Write.Character(x, 18, "Right Leg", g.Torso.RightLeg.Status,        g.Torso.RightLeg.Armor.Status);
+        Write.Character(x, 19, "Left Leg", g.Torso.LeftLeg.Status,          g.Torso.LeftLeg.Armor.Status);
         Write.Line(x + 43, 0, Colour.SPEAK + "Main Hand" + Colour.RESET);
         Write.Line(x + 43, 2, Colour.SPEAK + "Off Hand" + Colour.RESET);
         Write.Line(x + 43, 1, Colour.ITEM + g.Torso.RightArm.Hand.Weapon.Name + Colour.RESET);
         Write.Line(x + 43, 3, Colour.ITEM + g.Torso.LeftArm.Hand.Weapon.Name + Colour.RESET);
-        Write.Line(x + 45, 11, "Traits");
+        Write.Line(x + 40, 11, "Traits");
+        if (g.Traits.Count > 0) Write.Line(x + 40, 12, g.Trait1);
+        if (g.Traits.Count > 1) Write.Line(x + 40, 13, g.Trait2);
+        if (g.Traits.Count > 2) Write.Line(x + 40, 14, g.Trait3);
     }
 }

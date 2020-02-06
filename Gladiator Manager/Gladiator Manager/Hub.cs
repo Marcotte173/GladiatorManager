@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
 public class Hub:Location
 {
     static Owner p = Owner.p;
-    static List<ComputerOwner> ownerList = ComputerOwner.list;
+    static List<Owner> ownerList = Owner.list;
     static int day = 1;
     static List<List<Gladiator>> matches = new List<List<Gladiator>> 
     { 
-        new List<Gladiator>{p.Roster[0],ownerList[1].Roster[0]},
-        new List<Gladiator>{ownerList[2].Roster[0],ownerList[3].Roster[0]},
-        new List<Gladiator>{ownerList[4].Roster[0],ownerList[5].Roster[0]},
-        new List<Gladiator>{ownerList[6].Roster[0],ownerList[7].Roster[0]},
-        new List<Gladiator>{ownerList[8].Roster[0],ownerList[9].Roster[0]}
+        new List<Gladiator>{},
+        new List<Gladiator>{},
+        new List<Gladiator>{},
+        new List<Gladiator>{},
+        new List<Gladiator>{}
     };
-    static List<int> matchNumbers = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     static bool audience;
     public Hub()
     : base()
@@ -38,28 +38,25 @@ public class Hub:Location
             Write.Line("[4] " + Colour.ENERGY + "Jobs" + Colour.RESET);
             Write.Line("[5] " + Colour.ENERGY + "Shady Jobs" + Colour.RESET);
             Write.Line("[6] " + Colour.DEFENCE + "Graveyard" + Colour.RESET);
-            Write.Line("[7] " + Colour.BURNING + "View your competition" + Colour.RESET);
+            Write.Line("[7] " + Colour.XP + "Owner Rankings" + Colour.RESET);
             if (audience) Write.Line("[8] " + Colour.XP + "Audience with the emperor" + Colour.RESET);
             else Write.Line("[X] " + Colour.MITIGATION + "The emperor has no interest in you" + Colour.RESET);
-            if (matches.Count <1) Write.Line("[9] " + Colour.DAMAGE + "Fight" + Colour.RESET);
-            else Write.Line("[X] " + Colour.MITIGATION + "There are no fights today" + Colour.RESET);
+            Write.Line("[X] " + Colour.MITIGATION + "Not implemented" + Colour.RESET);
             Write.Line("[0] " + Colour.TIME + "Next day" + Colour.RESET);
             Write.Line("[?] Help");
             string choice = Return.Option();
             if (choice == "1") Location.list[1].Go();
-            else if (choice == "9" && day % 2 == 0)
+            else if (choice == "9" )
             {
-                foreach(List<Gladiator> match in matches)
-                {
-                    Arena.Match(match[0], match[1]);
-                }
-                matches.Clear();
             }
             else if (choice == "0")
             {
+                Arena.Match(ownerList[0].Roster[0],ownerList[1].Roster[0]);
+                Arena.Match(ownerList[2].Roster[0],ownerList[3].Roster[0]);
+                Arena.Match(ownerList[4].Roster[0],ownerList[5].Roster[0]);
+                Arena.Match(ownerList[6].Roster[0],ownerList[7].Roster[0]);
+                Arena.Match(ownerList[8].Roster[0],ownerList[9].Roster[0]);
                 day++;
-                matches.Add(new List<Gladiator> { p.Roster[0], ownerList[day].Roster[0] });
-
                 p.Action = 3;
                 if (day % 3 == 0) Slaver.NewStock();
                 Recap.Go();

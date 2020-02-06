@@ -7,7 +7,7 @@ public class ArmArmor : Armor
     public ArmArmor(int level, int tier)
     : base(level, tier)
     {
-        HP = MaxHP = 2 + level;
+        HP = MaxHP = level;
         name =$"{quality}{material}Vambraces" ;
         if (level == 0) name = "None";
     }

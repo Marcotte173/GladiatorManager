@@ -8,6 +8,6 @@ public class Blade : Weapon
     : base(level, tier)
     {
         damage = 2 + (level + tier*2);
-        if (level == 0) name = "None";
+        if (level == 0) name = "Fist";
     }
 }

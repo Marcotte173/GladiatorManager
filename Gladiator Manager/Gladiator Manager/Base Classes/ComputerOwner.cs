@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 public class ComputerOwner:Owner
-{
-    public static List<ComputerOwner> list = new List<ComputerOwner> { };
+{    
     public ComputerOwner(int gladiators, int level, int goldBoost, int prestigeBoost)
     : base()
     {
@@ -13,5 +12,11 @@ public class ComputerOwner:Owner
         win = 0;
         loss = 0;
         name = Gladiator.list[Return.RandomInt(0, list.Count)];
+        for (int i = 0; i < gladiators; i++)
+        {
+            Gladiator g = new Gladiator(level);
+            Roster.Add(g);
+            g.Owner = this;
+        }
     }
 }

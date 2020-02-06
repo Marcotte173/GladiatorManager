@@ -12,14 +12,15 @@ public class Armor:Equipment
     protected bool undamaged;
     protected bool damaged;
     protected bool severelyDamaged;
+    protected bool none;
     protected string quality;
     protected string material;
     public Armor(int level, int tier)
     : base(level,tier)
-    {
-        undamaged = true;
+    {        
         quality = (tier == 0) ? "Battered " : (tier == 1) ? "" : (tier == 2) ? "Nice " : "Superior ";
-        material = (level == 0) ? "None" : (level == 1) ? "Leather " : (level == 2) ? "Chain " : "Plate ";        
+        material = (level == 0) ? "None" : (level == 1) ? "Leather " : (level == 2) ? "Chain " : "Plate ";
+        fatigue = level;
     }
     public int HP { get { return hp; } set { hp = value; } }
     public int MaxHP { get { return maxHp; } set { maxHp = value; } }
@@ -31,12 +32,21 @@ public class Armor:Equipment
     public bool SeverelyDamaged { get { return severelyDamaged; } set { severelyDamaged = value; } }
     public virtual void CheckStatus()
     {
-        if (hp <= 0)
+        if (level == 0)
+        {
+            none = true;
+            destroyed = false;
+            undamaged = false;
+            damaged = false;
+            severelyDamaged = false;
+        }
+        else if (hp <= 0)
         {
             destroyed = true;
             undamaged = false;
             damaged = false;
             severelyDamaged = false;
+            none = false;
         }
         else if (hp == maxHp)
         {
@@ -44,6 +54,7 @@ public class Armor:Equipment
             undamaged = true;
             damaged = false;
             severelyDamaged = false;
+            none = false;
         }
         else if (hp < maxHp && (hp == 1 && hp == 2))
         {
@@ -51,6 +62,7 @@ public class Armor:Equipment
             undamaged = false;
             damaged = false;
             severelyDamaged = true;
+            none = false;
         }
         else
         {
@@ -58,12 +70,13 @@ public class Armor:Equipment
             undamaged = false;
             damaged = true;
             severelyDamaged = false;
-        }
+            none = false;
+        }        
     }
     public virtual void TakeDamage(int damage)
     {
         hp -= damage;
         CheckStatus();
     }
-    public string Status { get { return (undamaged) ? Colour.HEALTH + "Undamaged" + Colour.RESET : (destroyed) ? Colour.DAMAGE + "Destroyed" + Colour.RESET : (severelyDamaged) ? Colour.GOLD + "Severely Damaged" + Colour.RESET : Colour.HIT + "Damaged" + Colour.RESET; } }
+    public string Status { get { return (undamaged) ? Colour.HEALTH + "Undamaged" + Colour.RESET : (destroyed) ? Colour.DAMAGE + "Destroyed" + Colour.RESET : (severelyDamaged) ? Colour.GOLD + "Severely Damaged" + Colour.RESET : (Damaged)?Colour.HIT + "Damaged" + Colour.RESET:"None"; } }
 }

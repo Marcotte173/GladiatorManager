@@ -70,11 +70,15 @@ public class Hub:Location
         int x = 5;
         for (int i = 0; i < p.Roster.Count; i++)
         {            
-            Write.Line(x, 8,  Colour.NAME +p.Roster[i].Name+ Colour.RESET);
-            Write.Line(x, 10, $"Wins      {p.Roster[i].Win}");
-            Write.Line(x, 11, $"Strength  {p.Roster[i].Strength}");
-            Write.Line(x, 12, $"Offence   {p.Roster[i].Offence}");
-            Write.Line(x, 13, $"Defence   {p.Roster[i].Defence}");
+            Write.Line(x, 5,  Colour.NAME +p.Roster[i].Name+ Colour.RESET);
+            Write.Line(x, 7, $"Wins       {p.Roster[i].Win}");
+            Write.Line(x, 8, $"Strength   {p.Roster[i].Strength}");
+            Write.Line(x, 9, $"Offence    {p.Roster[i].Offence}");
+            Write.Line(x, 10, $"Defence    {p.Roster[i].Defence}");
+            Write.Line(x, 11, $"Endurance  {p.Roster[i].Endurance}");
+            if (p.Roster[i].Traits.Count > 0) Write.Line(x, 13, $"{p.Roster[i].Trait1}");
+            if (p.Roster[i].Traits.Count > 1) Write.Line(x, 14, $"{p.Roster[i].Trait2}");
+            if (p.Roster[i].Traits.Count > 2) Write.Line(x, 15, $"{p.Roster[i].Trait3}");
             x += 25;
         }
     }

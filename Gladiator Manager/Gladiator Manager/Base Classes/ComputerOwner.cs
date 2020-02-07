@@ -14,7 +14,7 @@ public class ComputerOwner:Owner
         name = Gladiator.list[Return.RandomInt(0, list.Count)];
         for (int i = 0; i < gladiators; i++)
         {
-            Gladiator g = new Gladiator(level);
+            Gladiator g = new Gladiator(Return.RandomInt(3,level));
             Roster.Add(g);
             g.Owner = this;
         }

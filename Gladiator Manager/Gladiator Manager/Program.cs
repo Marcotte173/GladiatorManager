@@ -12,7 +12,7 @@ namespace Gladiator_Manager
             for (int i = 0; i < names.Length; i++) { Gladiator.list.Add(names[i]); }
             for (int i = 0; i < 9; i++)
             {
-                Owner.list.Add(new ComputerOwner(Return.RandomInt(2, 5), 2, Return.RandomInt(50, 300), Return.RandomInt(-10, 90)));
+                Owner.list.Add(new ComputerOwner(Return.RandomInt(2, 5), 6, Return.RandomInt(50, 300), Return.RandomInt(-10, 90)));
             }
             Write.Line(Colour.RESET);            
             Slaver.NewStock();

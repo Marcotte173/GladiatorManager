@@ -82,6 +82,17 @@ public class Arena:Location
 
     private void Attack()
     {
+        int g1Bonus = (Gladiator1.Strength - 10) / 2;
+        int g2Bonus = (Gladiator2.Strength - 10) / 2;
+        int shield2 = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+        int weapon2L = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? 0 : (Gladiator2.Torso.LeftArm.Hand.Weapon.Level == 0 && (Gladiator2.Trait1 == "Ambidextrous" || Gladiator2.Trait2 == "Ambidextrous" || Gladiator2.Trait3 == "Ambidextrous")) ? 2 : (Gladiator2.Trait1 == "Ambidextrous" || Gladiator2.Trait2 == "Ambidextrous" || Gladiator2.Trait3 == "Ambidextrous") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+
+        int shield1 = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
+        int weapon1L = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? 0 : (Gladiator1.Torso.LeftArm.Hand.Weapon.Level == 0 && (Gladiator1.Trait1 == "Ambidextrous" || Gladiator2.Trait1 == "Ambidextrous" || Gladiator1.Trait3 == "Ambidextrous")) ? 2 : (Gladiator1.Trait1 == "Ambidextrous" || Gladiator2.Trait1 == "Ambidextrous" || Gladiator1.Trait3 == "Ambidextrous") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+
+        int weapon1R = (Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0 && (Gladiator1.Trait1 == "Unarmed Master" || Gladiator2.Trait1 == "Unarmed Master" || Gladiator1.Trait3 == "Unarmed Master")) ? 4 : (Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0) ? 2 : Gladiator1.Torso.RightArm.Hand.Weapon.Damage;
+        int weapon2R = (Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0 && (Gladiator2.Trait1 == "Unarmed Master" || Gladiator2.Trait1 == "Unarmed Master" || Gladiator2.Trait3 == "Unarmed Master")) ? 4 : (Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0) ? 2 : Gladiator2.Torso.RightArm.Hand.Weapon.Damage;
+
         int attackRoll = Return.RandomInt(1, 101);
         if (attackRoll < 96 && attackRoll > 5)
         {
@@ -97,52 +108,56 @@ public class Arena:Location
                 attackRoll += Gladiator1.Defence - Gladiator2.Offence;
                 attackRoll = (attackRoll < 50) ? 50 : attackRoll;
             }
-            int x = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
-            int y = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
-            if (attackRoll < (41 - x) && attackRoll >= (25-x))
+            if (attackRoll < (41 - shield2) && attackRoll >= (25-shield2))
             {
                 //Gladiator1 strikes
-                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = (weapon1R + weapon1L)/2 + g1Bonus / 2;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 1));
             }
-            else if (attackRoll < (25 - x) && attackRoll >=(11-x))
+            else if (attackRoll < (25 - shield2) && attackRoll >=(11-shield2))
             {
                 //Gladiator1 strikes
-                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 1;
+                int damage = weapon1R + weapon1L + g1Bonus;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 2));
             }
-            else if (attackRoll < (11 - x))
+            else if (attackRoll < (11 - shield2))
             {
                 //Gladiator1 strikes
-                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 2;
+                int damage = weapon1R + weapon1L + g1Bonus *2;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
-            else if (attackRoll > (59 + y) && attackRoll <=(75+y))
+            else if (attackRoll > (59 + shield1) && attackRoll <=(75+shield1))
             {
                 //Gladiator2 strikes
-                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = (weapon2R + weapon2L) / 2 + g2Bonus/2;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 1));
             }
-            else if (attackRoll > (75 + y) && attackRoll <= (90 + y))
+            else if (attackRoll > (75 + shield1) && attackRoll <= (90 + shield1))
             {
                 //Gladiator2 strikes
-                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = weapon2R + weapon2L + g2Bonus;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 2));
             }
-            else if (attackRoll > (90 + y))
+            else if (attackRoll > (90 + shield1))
             {
                 //Gladiator2 strikes
-                int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = weapon2R + weapon2L + g2Bonus*2;
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));
@@ -153,14 +168,16 @@ public class Arena:Location
         {
             if (attackRoll < 6)
             {
-                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage*2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = weapon1R + weapon1L + (Gladiator1.Strength - 10); 
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
             if (attackRoll > 95)
             {
-                int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage * 2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
+                int damage = weapon2R + weapon2L + (Gladiator1.Strength - 10); 
+                damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));

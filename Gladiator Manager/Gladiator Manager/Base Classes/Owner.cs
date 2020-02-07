@@ -22,7 +22,7 @@ public class Owner
         actions = 3;
         win = 0;
         loss = 0;
-        Gladiator g = new Gladiator(1);
+        Gladiator g = new Gladiator(5);
         roster.Add(g);
         g.Owner = this;
     }

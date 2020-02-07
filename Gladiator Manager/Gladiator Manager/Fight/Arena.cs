@@ -68,33 +68,38 @@ public class Arena:Location
                 }
                 if(player)Thread.Sleep(1500);
             }
-            Gladiator1.Endurance -= Gladiator1.Fatigue;
-            Gladiator2.Endurance -= Gladiator2.Fatigue;
+            Fatigue();            
             if (player) Write.KeyPress();
         }    
         
     }
 
+    private void Fatigue()
+    {
+        Gladiator1.Endurance -= Gladiator1.Fatigue;
+        Gladiator2.Endurance -= Gladiator2.Fatigue;
+    }
+
     private void Attack()
     {
-        int attackRoll = Return.RandomInt(1, 21);
-        if (attackRoll != 20 && attackRoll != 1)
+        int attackRoll = Return.RandomInt(1, 101);
+        if (attackRoll < 96 && attackRoll > 5)
         {
             attackRoll -= Gladiator1.Offence;
             attackRoll += Gladiator2.Offence;
-            if (attackRoll < 10)
+            if (attackRoll < 50)
             {
                 attackRoll += Gladiator2.Defence - Gladiator1.Offence;
-                attackRoll = (attackRoll > 10) ? 10 : attackRoll;
+                attackRoll = (attackRoll > 50) ? 50 : attackRoll;
             }
-            if (attackRoll > 10)
+            if (attackRoll > 50)
             {
                 attackRoll += Gladiator1.Defence - Gladiator2.Offence;
-                attackRoll = (attackRoll < 10) ? 10 : attackRoll;
+                attackRoll = (attackRoll < 50) ? 50 : attackRoll;
             }
             int x = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
             int y = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
-            if (attackRoll < (9 - x) && attackRoll >= (5-x))
+            if (attackRoll < (41 - x) && attackRoll >= (25-x))
             {
                 //Gladiator1 strikes
                 int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
@@ -102,7 +107,7 @@ public class Arena:Location
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 1));
             }
-            else if (attackRoll < (5 - x) && attackRoll >=(2-x))
+            else if (attackRoll < (25 - x) && attackRoll >=(11-x))
             {
                 //Gladiator1 strikes
                 int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 1;
@@ -110,7 +115,7 @@ public class Arena:Location
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 2));
             }
-            else if (attackRoll < (2 - x))
+            else if (attackRoll < (11 - x))
             {
                 //Gladiator1 strikes
                 int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage + 2;
@@ -118,7 +123,7 @@ public class Arena:Location
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
-            else if (attackRoll > (11 + y) && attackRoll <=(15+y))
+            else if (attackRoll > (59 + y) && attackRoll <=(75+y))
             {
                 //Gladiator2 strikes
                 int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
@@ -126,7 +131,7 @@ public class Arena:Location
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 1));
             }
-            else if (attackRoll > (15 + y) && attackRoll <= (19 + y))
+            else if (attackRoll > (75 + y) && attackRoll <= (90 + y))
             {
                 //Gladiator2 strikes
                 int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
@@ -134,7 +139,7 @@ public class Arena:Location
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 2));
             }
-            else if (attackRoll > (19 + y))
+            else if (attackRoll > (90 + y))
             {
                 //Gladiator2 strikes
                 int damage = Gladiator2.Torso.RightArm.Hand.Weapon.Damage + Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
@@ -146,14 +151,14 @@ public class Arena:Location
         }
         else
         {
-            if (attackRoll == 1)
+            if (attackRoll < 6)
             {
                 int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage*2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
                 Body body = Target(Gladiator2);
                 body.TakeDamage(damage);
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
-            if (attackRoll == 20)
+            if (attackRoll > 95)
             {
                 int damage = Gladiator1.Torso.RightArm.Hand.Weapon.Damage * 2 + Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
                 Body body = Target(Gladiator2);
@@ -257,20 +262,20 @@ public class Arena:Location
     private static void Display(int x, Gladiator g)
     {
         Write.Character(x, 0, g.Name, "", "");
-        Write.Line(x, 2, $"Strength    {g.Strength}");
-        Write.Line(x, 3, $"Offence     {g.Offence}");
-        Write.Line(x, 4, $"Defence     {g.Defence}");
-        Write.Line(x, 5, $"Endurance   {g.Endurance}");
-        Write.Line(x + 15, 0, Colour.SPEAK + "Head Armor" + Colour.RESET);
-        Write.Line(x + 15, 1, Colour.ITEM + g.Torso.Head.Armor.Name + Colour.RESET);
-        Write.Line(x + 15, 2, Colour.SPEAK + "Body Armor" + Colour.RESET);
-        Write.Line(x + 15, 3, Colour.ITEM + g.Torso.Armor.Name + Colour.RESET);
-        Write.Line(x + 15, 4, Colour.SPEAK + "Leg Armor" + Colour.RESET);
-        Write.Line(x + 15, 5, Colour.ITEM + g.Torso.RightLeg.Armor.Name + Colour.RESET);
-        Write.Line(x + 15, 6, Colour.SPEAK + "Arm Armor" + Colour.RESET);
-        Write.Line(x + 15, 7, Colour.ITEM + g.Torso.RightArm.Armor.Name + Colour.RESET);
-        Write.Line(x + 15, 8, Colour.SPEAK + "Gloves" + Colour.RESET);
-        Write.Line(x + 15, 9, Colour.ITEM + g.Torso.RightArm.Hand.Armor.Name + Colour.RESET);
+        Write.Line(x, 2, $"Strength   {g.Strength}");
+        Write.Line(x, 3, $"Offence    {g.Offence}");
+        Write.Line(x, 4, $"Defence    {g.Defence}");
+        Write.Line(x, 5, $"Endurance  {g.Endurance}/{g.MaxEndurance}");
+        Write.Line(x + 17, 0, Colour.SPEAK + "Head Armor" + Colour.RESET);
+        Write.Line(x + 17, 1, Colour.ITEM + g.Torso.Head.Armor.Name + Colour.RESET);
+        Write.Line(x + 17, 2, Colour.SPEAK + "Body Armor" + Colour.RESET);
+        Write.Line(x + 17, 3, Colour.ITEM + g.Torso.Armor.Name + Colour.RESET);
+        Write.Line(x + 17, 4, Colour.SPEAK + "Leg Armor" + Colour.RESET);
+        Write.Line(x + 17, 5, Colour.ITEM + g.Torso.RightLeg.Armor.Name + Colour.RESET);
+        Write.Line(x + 17, 6, Colour.SPEAK + "Arm Armor" + Colour.RESET);
+        Write.Line(x + 17, 7, Colour.ITEM + g.Torso.RightArm.Armor.Name + Colour.RESET);
+        Write.Line(x + 17, 8, Colour.SPEAK + "Gloves" + Colour.RESET);
+        Write.Line(x + 17, 9, Colour.ITEM + g.Torso.RightArm.Hand.Armor.Name + Colour.RESET);
         Write.Character(x, 11, "LOCATION", $"STATUS", "ARMOR");
         Write.Character(x, 12, "Head", g.Torso.Head.Status,                 g.Torso.Head.Armor.Status);
         Write.Character(x, 13, "Torso", g.Torso.Status,                     g.Torso.Armor.Status);

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Buy\" />
-    <Folder Include="Train\" />
   </ItemGroup>
 
 </Project>

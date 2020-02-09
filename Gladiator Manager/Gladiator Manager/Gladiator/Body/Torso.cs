@@ -19,7 +19,7 @@ public class Torso : Body
         leftArm = new Arm();
         rightLeg = new Leg();
         leftLeg = new Leg();
-        hp = maxHp = 5;
+        hp = maxHp = 8;
         armor = new TorsoArmor(0, 0);
     }
     public Arm RightArm { get { return rightArm; } set { rightArm = value; } }

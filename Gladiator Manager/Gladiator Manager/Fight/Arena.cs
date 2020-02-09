@@ -82,16 +82,28 @@ public class Arena:Location
 
     private void Attack()
     {
+        //Bonuses based on strength
         int g1Bonus = (Gladiator1.Strength - 10) / 2;
         int g2Bonus = (Gladiator2.Strength - 10) / 2;
-        int shield2 = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
-        int weapon2L = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? 0 : (Gladiator2.Torso.LeftArm.Hand.Weapon.Level == 0 && (Gladiator2.Trait1 == "Ambidextrous" || Gladiator2.Trait2 == "Ambidextrous" || Gladiator2.Trait3 == "Ambidextrous")) ? 2 : (Gladiator2.Trait1 == "Ambidextrous" || Gladiator2.Trait2 == "Ambidextrous" || Gladiator2.Trait3 == "Ambidextrous") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
-
+        //Gladiator 1 Right and left hand. Shield Bonus
+        //Empty Right Hand is 2, or Weapon Dam
+        int weapon1R = (Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0) ? 2 : Gladiator1.Torso.RightArm.Hand.Weapon.Damage;
+        if (Gladiator1.Traits.Contains((Trait)11) && Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0) weapon1R += 2;
+        //Block value is shield if they have on or 0
         int shield1 = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator1.Torso.LeftArm.Hand.Weapon.Damage : 0;
-        int weapon1L = (Gladiator1.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? 0 : (Gladiator1.Torso.LeftArm.Hand.Weapon.Level == 0 && (Gladiator1.Trait1 == "Ambidextrous" || Gladiator2.Trait1 == "Ambidextrous" || Gladiator1.Trait3 == "Ambidextrous")) ? 2 : (Gladiator1.Trait1 == "Ambidextrous" || Gladiator2.Trait1 == "Ambidextrous" || Gladiator1.Trait3 == "Ambidextrous") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+        //Empty Left Hand is 0, or Weapon Dam
+        int weapon1L = 0;
+        if (Gladiator1.Traits.Contains((Trait)14)) weapon1L += (Gladiator1.Torso.LeftArm.Hand.Weapon.Level == 0 && Gladiator1.Traits.Contains((Trait)11)) ? 2 : Gladiator1.Torso.LeftArm.Hand.Weapon.Damage;
 
-        int weapon1R = (Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0 && (Gladiator1.Trait1 == "Unarmed Master" || Gladiator2.Trait1 == "Unarmed Master" || Gladiator1.Trait3 == "Unarmed Master")) ? 4 : (Gladiator1.Torso.RightArm.Hand.Weapon.Level == 0) ? 2 : Gladiator1.Torso.RightArm.Hand.Weapon.Damage;
-        int weapon2R = (Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0 && (Gladiator2.Trait1 == "Unarmed Master" || Gladiator2.Trait1 == "Unarmed Master" || Gladiator2.Trait3 == "Unarmed Master")) ? 4 : (Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0) ? 2 : Gladiator2.Torso.RightArm.Hand.Weapon.Damage;
+        //Gladiator 2 Right and left hand. Shield Bonus
+        //Empty Right Hand is 2, or Weapon Dam
+        int weapon2R = (Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0)? 2 : Gladiator2.Torso.RightArm.Hand.Weapon.Damage;
+        if (Gladiator2.Traits.Contains((Trait)11) && Gladiator2.Torso.RightArm.Hand.Weapon.Level == 0) weapon2R += 2;
+        //Block value is shield if they have on or 0
+        int shield2 = (Gladiator2.Torso.LeftArm.Hand.Weapon.Type == "Shield") ? Gladiator2.Torso.LeftArm.Hand.Weapon.Damage : 0;
+        //Empty Left Hand is 0, or Weapon Dam
+        int weapon2L =  0;
+        if (Gladiator2.Traits.Contains((Trait)14)) weapon2L += (Gladiator2.Torso.LeftArm.Hand.Weapon.Level == 0 && Gladiator2.Traits.Contains((Trait)11)) ? 2 : Gladiator2.Torso.LeftArm.Hand.Weapon.Damage;
 
         int attackRoll = Return.RandomInt(1, 101);
         if (attackRoll < 96 && attackRoll > 5)
@@ -114,7 +126,15 @@ public class Arena:Location
                 int damage = (weapon1R + weapon1L)/2 + g1Bonus / 2;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator2.MaxEndurance -= 5;
+                        Gladiator2.Endurance = (Gladiator2.Endurance - 10 <= 0) ? 0 : Gladiator2.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 1));
             }
             else if (attackRoll < (25 - shield2) && attackRoll >=(11-shield2))
@@ -123,7 +143,15 @@ public class Arena:Location
                 int damage = weapon1R + weapon1L + g1Bonus;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator2.MaxEndurance -= 5;
+                        Gladiator2.Endurance = (Gladiator2.Endurance - 10 <= 0) ? 0 : Gladiator2.Endurance;
+                    }
+                }                
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 2));
             }
             else if (attackRoll < (11 - shield2))
@@ -132,7 +160,15 @@ public class Arena:Location
                 int damage = weapon1R + weapon1L + g1Bonus *2;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator2.MaxEndurance -= 5;
+                        Gladiator2.Endurance = (Gladiator2.Endurance - 10 <= 0) ? 0 : Gladiator2.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
             else if (attackRoll > (59 + shield1) && attackRoll <=(75+shield1))
@@ -141,7 +177,15 @@ public class Arena:Location
                 int damage = (weapon2R + weapon2L) / 2 + g2Bonus/2;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator1.MaxEndurance -= 5;
+                        Gladiator1.Endurance = (Gladiator1.Endurance - 10 <= 0) ? 0 : Gladiator1.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 1));
             }
             else if (attackRoll > (75 + shield1) && attackRoll <= (90 + shield1))
@@ -150,7 +194,15 @@ public class Arena:Location
                 int damage = weapon2R + weapon2L + g2Bonus;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator1.MaxEndurance -= 5;
+                        Gladiator1.Endurance = (Gladiator1.Endurance - 10 <= 0) ? 0 : Gladiator1.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 2));
             }
             else if (attackRoll > (90 + shield1))
@@ -159,7 +211,15 @@ public class Arena:Location
                 int damage = weapon2R + weapon2L + g2Bonus*2;
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator1);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator1.MaxEndurance -= 5;
+                        Gladiator1.Endurance = (Gladiator1.Endurance - 10 <= 0) ? 0 : Gladiator1.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));
             }
             else if(player) Write.Line("The gladiators square off, neither gaining a real advantage");                
@@ -171,7 +231,15 @@ public class Arena:Location
                 int damage = weapon1R + weapon1L + (Gladiator1.Strength - 10); 
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator2.MaxEndurance -= 5;
+                        Gladiator2.Endurance = (Gladiator2.Endurance - 10 <= 0) ? 0 : Gladiator2.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator1, Gladiator2, body, 3));
             }
             if (attackRoll > 95)
@@ -179,7 +247,15 @@ public class Arena:Location
                 int damage = weapon2R + weapon2L + (Gladiator1.Strength - 10); 
                 damage = (damage <= 0) ? damage = 1 : damage;
                 Body body = Target(Gladiator2);
-                body.TakeDamage(damage);
+                if (body.Disabled == false)
+                {
+                    body.TakeDamage(damage);
+                    if (body.Disabled)
+                    {
+                        Gladiator1.MaxEndurance -= 5;
+                        Gladiator1.Endurance = (Gladiator1.Endurance - 10 <= 0) ? 0 : Gladiator1.Endurance;
+                    }
+                }
                 if (player) Console.Write(Flavor(Gladiator2, Gladiator1, body, 3));
             }
         }        

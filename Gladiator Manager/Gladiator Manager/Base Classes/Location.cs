@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 public class Location
 {
-    public static  List<Location> list = new List<Location> { new Hub(), new Slaver(),new Arena()  };
+    public static List<Location> list = new List<Location> { new Hub(), new Slaver(), new Manage(), null, null, null, null, null, null, null};
 
     public Location()
     {

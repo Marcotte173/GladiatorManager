@@ -14,6 +14,7 @@ public class Recap
         }
         Write.KeyPress();
         list.Clear();
+        foreach(Owner o in Owner.list) { foreach (Gladiator g in o.Roster) { g.Endurance = g.MaxEndurance; } }
     }
 
     internal static void Calculate(Gladiator winner, Gladiator loser)
